@@ -677,6 +677,7 @@
     p.LEFT      = 37;
 
     var codedKeys = [p.SHIFT, p.CONTROL, p.ALT, p.UP, p.RIGHT, p.DOWN, p.LEFT];
+    p.LastText        = [ 0, 0 ,0 ];
 
     // "Private" variables used to maintain state
     var online = true,
@@ -980,7 +981,7 @@
           }
         }
       }
-    }
+    };
 
     p.ArrayList = function ArrayList(size, size2, size3) {
 
@@ -2446,7 +2447,7 @@
         );
 
         closeButton[$title] = "Close Log";
-        append(closeButton, createTextNode("X"));
+        append(closeButton, createTextNode("\u2716"));
 
         resizer[$title] = "Double-click to toggle log minimization";
 
@@ -2770,16 +2771,16 @@
     };
 
     p.dist = function() {
-      var dx, dy, dz = 0;      
+      var dx, dy, dz = 0;
       if (arguments.length === 4) {
         dx = arguments[0] - arguments[2];
         dy = arguments[1] - arguments[3];
-      } 
+      }
       else if (arguments.length === 6) {
         dx = arguments[0] - arguments[3];
         dy = arguments[1] - arguments[4];
         dz = arguments[2] - arguments[5];
-      }      
+      }
       return Math.sqrt(dx * dx + dy * dy + dz * dz);
     };
 
@@ -2835,7 +2836,7 @@
       if (typeof aNumber === 'object' && aNumber.constructor === Array) {
         var bytes = [];
         for(var i = 0; i < aNumber.length; i++) {
-          bytes[i] = p.byte(aNumber[i]);  
+          bytes[i] = p.byte(aNumber[i]);
         }
         return bytes;
       } else {
@@ -3989,7 +3990,6 @@
 			sphereVerts.push(0);
 			sphereVerts.push(1);
 			sphereVerts.push(0);
-
 
       //set the buffer data
       curContext.bindBuffer(curContext.ARRAY_BUFFER, sphereBuffer);
@@ -5479,11 +5479,10 @@
               }
               p.LastText[0] = x;
               p.LastText[1] = p.LastText[1] + curTextSize;
-              /*for(; start < spaceMark + 1 ; start++ ){
+
+              for(; start < spaceMark + 1 ; start++ ){
                 text( str[start] )
-              }*/
-              text(str.substring(start,spaceMark+1));
-              start=spaceMark+1;
+              }
               lineWidth = 0;
               if( p.LastText[1] + 2*curTextSize > arguments[2] + height + 0.6*curTextSize ){ // stop if no enough space for one more line draw
                 return;
