@@ -2,10 +2,10 @@
 
     P R O C E S S I N G . J S - 0 . 6
     a port of the Processing visualization language
-    
-    License       : MIT 
+
+    License       : MIT
     Developer     : John Resig: http://ejohn.org
-    Web Site      : http://processingjs.org  
+    Web Site      : http://processingjs.org
     Java Version  : http://processing.org
     Github Repo.  : http://github.com/jeresig/processing-js
     Bug Tracking  : http://processing-js.lighthouseapp.com
@@ -25,7 +25,7 @@
       aElement = document.getElementById(aElement);
     }
 
-    // Build an Processing functions and env. vars into 'p'  
+    // Build an Processing functions and env. vars into 'p'
     var p = Processing.build(aElement);
 
     // Send aCode Processing syntax to be converted to JavaScript
@@ -68,7 +68,7 @@
       }
     }
   };
-  
+
 	/*
     Andor Salga
     asalga.wordpress.com
@@ -81,9 +81,9 @@
       WebGLFloatArray;
       WebGLFloatArrayExists = true;
     }
-    catch(e){}     
+    catch(e){}
 
-    return WebGLFloatArrayExists === true ? new WebGLFloatArray(data) : new CanvasFloatArray(data);    
+    return WebGLFloatArrayExists === true ? new WebGLFloatArray(data) : new CanvasFloatArray(data);
   };
   
   /*
@@ -143,6 +143,7 @@
                          0.5,-0.5,0.5,0.5,-0.5,-0.5,0.5,-0.5,-0.5,-0.5,-0.5,-0.5,
                         -0.5,-0.5,-0.5,-0.5,-0.5,0.5,-0.5,-0.5,0.5,0.5,-0.5,0.5];
   
+
   var boxBuffer;
   var boxNormBuffer;
   var boxOutlineBuffer;
@@ -561,8 +562,8 @@
                 notString = true;
                 quoteType = "";
               }
-            } else { 
-              escape = false; 
+            } else {
+              escape = false;
             }
           }
         }
@@ -642,7 +643,7 @@
     p.SOFT_LIGHT = 1 << 11;
     p.DODGE = 1 << 12;
     p.BURN = 1 << 13;
-    p.PRECISIONB = 15; // fixed point precision is limited to 15 bits!! 
+    p.PRECISIONB = 15; // fixed point precision is limited to 15 bits!!
     p.PRECISIONF = 1 << p.PRECISIONB;
     p.PREC_MAXVAL = p.PRECISIONF - 1;
     p.PREC_ALPHA_SHIFT = 24 - p.PRECISIONB;
@@ -817,7 +818,7 @@
 
     ////////////////////////////////////////////////////////////////////////////
     // Array handling
-    ////////////////////////////////////////////////////////////////////////////    
+    ////////////////////////////////////////////////////////////////////////////
     p.split = function (str, delim) {
       return str.split(delim);
     };
@@ -863,7 +864,7 @@
     p.concat = function concat(array1, array2) {
       return array1.concat(array2);
     };
-		
+
 		p.sort = function(array, numElem){
 			var ret = [];
 
@@ -875,14 +876,14 @@
 				for(var i=0; i < elemsToCopy; i++){
 					ret.push(array[i]);
 				}
-				if(typeof array[0] === "string"){  
+				if(typeof array[0] === "string"){
 					ret.sort();
 				}
 				// int or float
 				else{
 					ret.sort(function(a,b){return a-b;});
 				}
-						
+
 				// copy on the rest of the elements that were not sorted in case the user
 				// only wanted a subset of an array to be sorted.
 				if(numElem > 0){
@@ -893,7 +894,7 @@
 			}
 			return ret;
 		};
-		
+
     p.splice = function (array, value, index) {
       if (array.length === 0 && value.length === 0) {
         return array;
@@ -1522,7 +1523,7 @@
     p.rotateX = function( angleInRadians ) {
       forwardTransform.rotateX( angleInRadians );
     };
-    
+
     p.rotateZ = function( angleInRadians ) {
       forwardTransform.rotateZ( angleInRadians );
     };
@@ -1530,13 +1531,13 @@
     p.rotateY = function( angleInRadians ) {
       forwardTransform.rotateY( angleInRadians );
     };
-		
+
 		p.rotate = function rotate( angleInRadians ) {
-      if (p.use3DContext) {  
+      if (p.use3DContext) {
 				forwardTransform.rotateZ( angleInRadians );
 			}else { curContext.rotate( angleInRadians ); }
     };
-		
+
     p.pushStyle = function pushStyle() {
       // Save the canvas state.
       curContext.save();
@@ -1711,14 +1712,14 @@
     p.Import = function Import(lib) {
       // Replace evil-eval method with a DOM <script> tag insert method that
       // binds new lib code to the Processing.lib names-space and the current
-      // p context. -F1LT3R 
+      // p context. -F1LT3R
     };
 
     var contextMenu = function (e) {
       e.preventDefault();
       e.stopPropagation();
     };
-    
+
     p.disableContextMenu = function disableContextMenu() {
       curElement.addEventListener('contextmenu', contextMenu, false);
     };
@@ -1739,18 +1740,18 @@
 			var str = "";
 			for(var i=0; i < numBitsInValue ;i++) {
 				str += (mask & value) ? "1" : "0";
-				mask = mask >>> 1; 
+				mask = mask >>> 1;
 			}
 			return str;
 		}
 
 		p.binary = function(num, numBits) {
 			var numBitsInValue = 32;
-				
+
 			// color
 			if(typeof num === "string" && num.length > 1) {
 				var c = num.slice(5,-1).split(",");
-						
+
 				// if all components are zero, a single "0" is returned for some reason
         // [0] alpha is normalized, [1] r, [2] g, [3] b
 				var sbin = [
@@ -1759,10 +1760,10 @@
 				decToBin(c[1],8),
 				decToBin(c[2],8)
 				];
-						
+
 				var s = sbin[0]+sbin[1]+sbin[2]+sbin[3];
-						
-				if(numBits) { 
+
+				if(numBits) {
 					s = s.substr(-numBits);
 				}
 				// if the user didn't specify number of bits,
@@ -1773,11 +1774,11 @@
 				}
 				return s;
 			}
-				
+
 			// char
 			if(typeof num === "string") {
 				num = num.charCodeAt(0);
-						
+
 				if(numBits) {
 					numBitsInValue = 32;
 				}
@@ -1785,15 +1786,15 @@
 					numBitsInValue = 16;
 				}
 			}
-				
+
 			var str = decToBin(num, numBitsInValue);
-				
+
 			// trim string if user wanted less chars
 			if(numBits) {
 				str = str.substr(-numBits);
-			}    
+			}
 			return str;
-		};  
+		};
 
     p.unbinary = function unbinary(binaryString) {
       var binaryPattern = new RegExp("^[0|1]{8}$");
@@ -1835,7 +1836,7 @@
         if ( right === 0 ) {
           right = 1;
         }
-        
+
         if ( right < 0 ) {
           rounded = Math.round(num);
         } else {
@@ -1861,7 +1862,7 @@
           }
           str = splitNum.join(".");
         } else {
-          str = splitNum[0]; 
+          str = splitNum[0];
         }
 
         str = (negative ? "-" : " ") + str;
@@ -1888,7 +1889,7 @@
         if ( right === 0 ) {
           right = 1;
         }
-        
+
         if ( right < 0 ) {
           rounded = Math.round(num);
         } else {
@@ -1914,7 +1915,7 @@
           }
           str = splitNum.join(".");
         } else {
-          str = splitNum[0]; 
+          str = splitNum[0];
         }
 
         str = (negative ? "-" : "+") + str;
@@ -1985,7 +1986,7 @@
       }
       return hexstring;
     };
-    
+
     p.unhex = function (str) {
       var value = 0,
         multiplier = 1,
@@ -2066,7 +2067,7 @@
     };
 
 
-    // Load a file or URL into strings     
+    // Load a file or URL into strings
     p.loadStrings = function loadStrings(url) {
       return ajax(url).split("\n");
     };
@@ -2141,13 +2142,13 @@
         str = "" + num;
 
         for ( i = left - str.indexOf( '.' ); i > 0; i-- ) {
-          str = "0" + str;  
+          str = "0" + str;
         }
 
         var numDec = str.length - str.indexOf( '.' ) - 1;
         if ( numDec <= right ) {
           for ( i = right - ( str.length - str.indexOf( '.' ) - 1 ); i > 0; i-- ) {
-            str = str + "0";  
+            str = str + "0";
           }
         } else if ( right > 0 ) {
           str = str.substring( 0, str.length - ( numDec - right ) );
@@ -2552,9 +2553,9 @@
         }
       } else {
         // if str is not an array then remove all whitespace, tabs, and returns
-        newstr = str.replace(/^\s*/,'').replace(/\s*$/,'').replace(/\r*$/,''); 
+        newstr = str.replace(/^\s*/,'').replace(/\s*$/,'').replace(/\r*$/,'');
       }
-      return newstr; 
+      return newstr;
     };
 
     ////////////////////////////////////////////////////////////////////////////
@@ -2611,7 +2612,7 @@
 
       return ret;
     };
-		
+
 		//Determines the smallest value in a sequence of numbers.
 		//Can accept more than 2 parameters or an array
 		//Undefined if passed in an array and a scalar; or if a non number was passed in
@@ -2631,13 +2632,13 @@
           return undefined;
         }
       }
-      
+
       return Math.min.apply(this, numbers);
     };
 
 		//Determines the biggest value in a sequence of numbers.
 		//Can accept more than 2 parameters or an array
-		//Undefined if passed in an array and a scalar; or if a non number was passed in 
+		//Undefined if passed in an array and a scalar; or if a non number was passed in
     p.max = function() {
       var numbers;
 
@@ -2654,7 +2655,7 @@
           return undefined;
         }
       }
-      
+
       return Math.max.apply(this, numbers);
     };
 
@@ -3003,8 +3004,8 @@
         }
       }
 
-      // The default 2d context has already been created in the p.init() stage if 
-      // a 3d context was not specified. This is so that a 2d context will be 
+      // The default 2d context has already been created in the p.init() stage if
+      // a 3d context was not specified. This is so that a 2d context will be
       // available if size() was not called.
 
       var props = {
@@ -3215,7 +3216,7 @@
         {
           tx = 0;
         }
-                              
+
 				this.elements[ 3] += tx*this.elements[ 0] + ty*this.elements[ 1] + tz*this.elements[ 2];
 				this.elements[ 7] += tx*this.elements[ 4] + ty*this.elements[ 5] + tz*this.elements[ 6];
 				this.elements[11] += tx*this.elements[ 8] + ty*this.elements[ 9] + tz*this.elements[10];
@@ -3269,7 +3270,7 @@
             target = [0,0,0];
           }
         }
-        
+
         if(target instanceof Array)
         {
           if(target.length === 3)
@@ -3501,7 +3502,7 @@
 
         // Determinant
         var fDet = fA0 * fB5 - fA1 * fB4 + fA2 * fB3 + fA3 * fB2 - fA4 * fB1 + fA5 * fB0;
-        
+
         // Account for a very small value
         // return false if not successful.
         if ( Math.abs( fDet ) <= 1e-9 )
@@ -3626,7 +3627,7 @@
 
     /*
       Sets the uniform variable 'varName' to the value specified by 'value'.
-      Before calling this function, make sure the correct program object 
+      Before calling this function, make sure the correct program object
       has been installed as part of the current rendering state.
 
       On some systems, if the variable exists in the shader but isn't used,
@@ -3653,7 +3654,7 @@
         else                            {curContext.uniform1i (varLocation, varValue);}
       }
     }
-		
+
     function vertexAttribPointer(programObj, varName, size, VBO) {
       var varLocation = curContext.getAttribLocation(programObj, varName);
       if(varLocation !== -1) {
@@ -3662,7 +3663,7 @@
         curContext.enableVertexAttribArray(varLocation);
       }
     }
-		
+
     function uniformMatrix( programObj, varName, transpose, matrix ) {
       var varLocation = curContext.getUniformLocation(programObj, varName);
       // the variable won't be found if it was optimized out.
@@ -3736,7 +3737,7 @@
 		////////////////////////////////////////////////////////////////////////////
     // Camera functions
     ////////////////////////////////////////////////////////////////////////////
-    
+
 		p.camera = function camera(eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ) {
 			if( arguments.length === 0 ){
 				//in case canvas is resized
@@ -3750,10 +3751,10 @@
 			else{
 				var z = new p.PVector( eyeX - centerX, eyeY - centerY, eyeZ - centerZ );
 				var y = new p.PVector( upX, upY, upZ);
-				var transX, transY, transZ;            
-				z.normalize();            
-				var x = p.PVector.cross( y, z );        
-				y = p.PVector.cross( z, x );            
+				var transX, transY, transZ;
+				z.normalize();
+				var x = p.PVector.cross( y, z );
+				y = p.PVector.cross( z, x );
 				x.normalize();
 				y.normalize();
 
@@ -3762,7 +3763,7 @@
 				        y.x, y.y, y.z, 0,
 				        z.x, z.y, z.z, 0,
 				        0,   0,   0,   1);
-				
+
         cam.translate( -eyeX, -eyeY, -eyeZ );
 
 				cameraInv = new PMatrix3D();
@@ -3776,7 +3777,7 @@
         modelView = new PMatrix3D();
 				modelView.set( cam );
 
-        forwardTransform = modelView;        
+        forwardTransform = modelView;
 
 				modelViewInv = new PMatrix3D();
 				modelViewInv.set( cameraInv );
@@ -3792,14 +3793,14 @@
 				cameraFar       = cameraZ * 10;
 				cameraAspect    = curElement.width / curElement.height;
 				p.perspective( cameraFOV, cameraAspect, cameraNear, cameraFar );
-			} else {        
+			} else {
 				var a = arguments;
-				var yMax, yMin, xMax, xMin;            
+				var yMax, yMin, xMax, xMin;
 				yMax = near * Math.tan( fov / 2 );
-				yMin = -yMax;            
+				yMin = -yMax;
 				xMax = yMax * aspect;
-				xMin = yMin * aspect;            
-				p.frustum( xMin, xMax, yMin, yMax, near, far );        
+				xMin = yMin * aspect;
+				p.frustum( xMin, xMax, yMin, yMax, near, far );
 			}
 		};
 
@@ -3823,7 +3824,7 @@
         var tx = -( right + left ) / ( right - left );
         var ty = -( top + bottom ) / ( top - bottom );
         var tz = -( far + near ) / ( far - near );
-        
+
         projection = new PMatrix3D();
         projection.set( x, 0, 0, tx,
                         0, y, 0, ty,
@@ -3832,7 +3833,7 @@
 
         frustumMode = false;
       }
-    };	
+    };
 
     p.printProjection = function() {
       projection.print();
@@ -3841,7 +3842,7 @@
     p.printCamera = function() {
       cam.print();
     };
-		
+
 		////////////////////////////////////////////////////////////////////////////
     // Shapes
     ////////////////////////////////////////////////////////////////////////////
@@ -3851,7 +3852,7 @@
 
       if(p.use3DContext)
       {
-        // user can uniformly scale the box by  
+        // user can uniformly scale the box by
         // passing in only one argument.
         if(!h || !d)
         {
@@ -3891,9 +3892,12 @@
 
           v.mult(m);
 
-          var normalMatrix = new PMatrix3D();
-          normalMatrix.set(v);
-          normalMatrix.invert();
+        // fix stitching problems. (lines get occluded by triangles
+        // since they share the same depth values). This is not entirely
+        // working, but it's a start for drawing the outline. So
+        // developers can start playing around with styles.
+        curContext.enable( curContext.POLYGON_OFFSET_FILL );
+        curContext.polygonOffset( 1, 1 );
 
           uniformMatrix( programObject3D , "normalTransform", false, normalMatrix.array() );
 
@@ -4234,7 +4238,7 @@
 
     ////////////////////////////////////////////////////////////////////////////
     // Vector drawing functions
-    ////////////////////////////////////////////////////////////////////////////    
+    ////////////////////////////////////////////////////////////////////////////
     p.Point = function Point(x, y) {
       this.x = x;
       this.y = y;
@@ -4594,7 +4598,7 @@
     p.bezierTangent = function bezierTangent(a, b, c, d, t) {
       return ( 3 * t * t * ( -a + 3 * b -3 * c + d ) +6 *t * ( a - 2 * b + c ) + 3 * ( -a + b ) );
     };
-	
+
     p.curvePoint = function curvePoint(a, b, c, d, t) {
       return 0.5 * ((2 * b) + (-a + c) * t + (2 * a - 5 * b + 4 * c - d) * t * t + (-a + 3 * b - 3 * c + d) * t * t * t);
     };
@@ -4936,7 +4940,7 @@
         var col = arguments;
 
         // if user passes in 1 argument, they either want
-        // a shade of gray or 
+        // a shade of gray or
         // it is a color object or
         // it's a hex value
         if (arguments.length === 1) {
@@ -5230,7 +5234,7 @@
 
       } else {
 
-        // If the font is a glyph, calculate by SVG table     
+        // If the font is a glyph, calculate by SVG table
         var font = p.loadGlyphs(name);
 
         return {
@@ -5277,7 +5281,7 @@
 
     p.textAlign = function textAlign() {};
 
-    // A lookup table for characters that can not be referenced by Object 
+    // A lookup table for characters that can not be referenced by Object
     p.glyphLook = function glyphLook(font, chr) {
 
       try {
@@ -5378,12 +5382,15 @@
 
     };
 
+
     // Print some text to the Canvas
-    p.text = function text(){
+    p.text = function text( str, x, y, width, height){
+      if( arguments.length === 1 ){ // for text( data )
 
-      var str=arguments[0];
+        p.text( str, p.LastText[0], p.LastText[1] );
 
-      if ( typeof str === 'number' && (str+"").indexOf('.') >= 0 ) {
+      }else if( arguments.length === 3 ){ // for text( data, x, y)
+        if ( typeof str === 'number' && (str+"").indexOf('.') >= 0 ) {
           // Make sure .15 rounds to .1, but .151 rounds to .2.
           if ( ( str * 1000 ) - Math.floor( str * 1000 ) === 0.5 ) {
             str = str - 0.0001;
@@ -5391,38 +5398,6 @@
           str = str.toFixed(3);
         } else if ( str === 0 ) {
           str = str.toString();
-      }
-
-      if ( typeof str !== 'array' ) {
-
-          str = str.toString();
-      }
-
-      if( arguments.length == 1 ){ // for text( str )
-
-        p.text( str, lastTextPos[0], lastTextPos[1] );
-
-      }else if( arguments.length == 3 ){ // for text( str, x, y)
-
-        text( str, arguments[1], arguments[2], 0 );
-
-      }else if( arguments.length == 4 ){ // for text( str, x, y, z)
-
-        var x=arguments[1], y=arguments[2], z=arguments[3], pos;
-
-        do{
-          pos = str.indexOf("\n");
-          if(pos != -1){
-            if(pos != 0){
-              text(str.substring(0, pos));
-            }
-            y += curTextSize;
-            str = str.substring(pos+1, str.length);
-          }
-        }while(pos != -1);
-
-        if(p.use3DContext){
-          //...
         }
 
         var width = 0;
@@ -5466,22 +5441,9 @@
           }
           curContext.restore();
         }
-
-        if(p.use3DContext){
-          // ...
-        }
-
-        lastTextPos[0] = x + width;
-        lastTextPos[1] = y;
-        lastTextPos[2] = z;
-
-      }else if( arguments.length == 5 ){ // for text( str, x, y , width, height)
-
-        text( str, arguments[1], arguments[2], arguments[3], arguments[4], 0 );
-
-      }else if( arguments.length == 6 ){ // for text( stringdata, x, y , width, height, z)
-
-        var x=arguments[1], y=arguments[2], width=arguments[3], height=arguments[4], z=arguments[5];
+        p.LastText[0] = x + width;
+        p.LastText[1] = y;
+      }else if( arguments.length === 5 ){ // for text( stringdata, x, y , width, height)
 
         if( str != "" ){
 
@@ -5494,8 +5456,8 @@
           var letterWidth = 0;
           var textboxWidth = width ;
 
-          lastTextPos[0] = x;
-          lastTextPos[1] = y - 0.4*curTextSize;
+          p.LastText[0] = x;
+          p.LastText[1] = y - 0.4*curTextSize;
 
           curContext.font = curTextSize + "px " + curTextFont.name;
 
@@ -5506,7 +5468,7 @@
             } else if (curContext.mozDrawText) {
               letterWidth = curContext.mozMeasureText( str[i] );
             }
-            if( str[i]!="\n" && ( str[i]==" " || (str[i-1]!=" " && str[i+1]==" ") || lineWidth + 2*letterWidth < textboxWidth ) ){ // check a line of text
+            if( str[i] != "\n" && ( str[i] == " " || (str[i-1]!=" " && str[i+1] == " ") || lineWidth + 2*letterWidth < textboxWidth ) ){ // check a line of text
               if( str[i] == " " ){
                 spaceMark = i;
               }
@@ -5515,19 +5477,13 @@
               if( start == spaceMark + 1 ){ // in case a whole line without a space
                 spaceMark = i;
               }
-
-              lastTextPos[0] = x;
-              lastTextPos[1] = lastTextPos[1] + curTextSize;
-              if(str[i]=="\n"){
-                text(str.substring(start,i));
-                start=i+1;
-              }else{
-                text(str.substring(start,spaceMark+1));
-                start=spaceMark+1;
+              p.LastText[0] = x;
+              p.LastText[1] = p.LastText[1] + curTextSize;
+              for(; start < spaceMark + 1 ; start++ ){
+                text( str[start] )
               }
-
               lineWidth = 0;
-              if( lastTextPos[1] + 2*curTextSize > y + height + 0.6*curTextSize ){ // stop if no enough space for one more line draw
+              if( p.LastText[1] + 2*curTextSize > arguments[2] + height + 0.6*curTextSize ){ // stop if no enough space for one more line draw
                 return;
               }
               i = start - 1;
@@ -5535,19 +5491,18 @@
           }
 
           if( start != str.length ){ // draw the last line
-            lastTextPos[0] = x;
-            lastTextPos[1] = lastTextPos[1] + curTextSize;
+            p.LastText[0] = x;
+            p.LastText[1] = p.LastText[1] + curTextSize;
             for(; start < str.length; start ++){
               text( str[start] );
             }
           }
 
-        } // end str != ""
-
-      } // end arguments.length == 6
+        }
+      }
     };
 
-    // Load Batik SVG Fonts and parse to pre-def objects for quick rendering 
+    // Load Batik SVG Fonts and parse to pre-def objects for quick rendering
     p.loadGlyphs = function loadGlyph(url) {
 
       var x, y, cx, cy, nx, ny, d, a, lastCom, lenC, horiz_adv_x, getXY = '[0-9\\-]+',
@@ -5570,7 +5525,7 @@
       var buildPath = function buildPath(d) {
         var c = regex("[A-Za-z][0-9\\- ]+|Z", d);
 
-        // Begin storing path object 
+        // Begin storing path object
         path = "var path={draw:function(){curContext.beginPath();curContext.save();";
 
         x = 0;
@@ -5695,7 +5650,7 @@
             horiz_adv_x = p.glyphTable[url].horiz_adv_x;
           }
           d = glyph[i].getAttribute("d");
-          // Split path commands in glpyh 
+          // Split path commands in glpyh
           if (d !== undefined) {
             path = buildPath(d);
             eval(path);
@@ -5707,7 +5662,7 @@
               draw: path.draw
             };
           }
-        } // finished adding glyphs to table            
+        } // finished adding glyphs to table
       };
 
       // Load and parse Batik SVG font as XML into a Processing Glyph object
@@ -5746,7 +5701,7 @@
       // Create a new object in glyphTable to store this font
       p.glyphTable[url] = {};
 
-      // Begin loading the Batik SVG font... 
+      // Begin loading the Batik SVG font...
       loadXML(url);
 
       // Return the loaded font for attribute grabbing
@@ -5794,7 +5749,7 @@
         var parsedCode = Processing.parse(code, p);
 
         if (!p.use3DContext) {
-          // Setup default 2d canvas context. 
+          // Setup default 2d canvas context.
           curContext = curElement.getContext('2d');
 
           // Canvas has trouble rendering single pixel stuff on whole-pixel
@@ -5812,7 +5767,7 @@
 
         // Step through the libraries that were attached at doc load...
         for (var i in Processing.lib) {
-          if (Processing.lib) {                
+          if (Processing.lib) {
             // Init the libraries in the context of this p_instance
             Processing.lib[i].call(p);
           }
@@ -5990,7 +5945,7 @@
           p.keyPressed = true;
         }
       });
-      
+
       attach(document, "keyup", function (e) {
         keyPressed = false;
         if (typeof p.keyPressed !== "function") {
