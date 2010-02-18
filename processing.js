@@ -680,6 +680,7 @@
     p.LEFT      = 37;
 
     var codedKeys = [p.SHIFT, p.CONTROL, p.ALT, p.UP, p.RIGHT, p.DOWN, p.LEFT];
+    p.LastText        = [ 0, 0 ,0 ];
 
     // "Private" variables used to maintain state
     var online = true,
@@ -983,7 +984,7 @@
           }
         }
       }
-    }
+    };
 
     p.ArrayList = function ArrayList(size, size2, size3) {
 
@@ -2770,16 +2771,16 @@
     };
 
     p.dist = function() {
-      var dx, dy, dz = 0;      
+      var dx, dy, dz = 0;
       if (arguments.length === 4) {
         dx = arguments[0] - arguments[2];
         dy = arguments[1] - arguments[3];
-      } 
+      }
       else if (arguments.length === 6) {
         dx = arguments[0] - arguments[3];
         dy = arguments[1] - arguments[4];
         dz = arguments[2] - arguments[5];
-      }      
+      }
       return Math.sqrt(dx * dx + dy * dy + dz * dz);
     };
 
@@ -2835,7 +2836,7 @@
       if (typeof aNumber === 'object' && aNumber.constructor === Array) {
         var bytes = [];
         for(var i = 0; i < aNumber.length; i++) {
-          bytes[i] = p.byte(aNumber[i]);  
+          bytes[i] = p.byte(aNumber[i]);
         }
         return bytes;
       } else {
@@ -5401,6 +5402,17 @@
           str = str.toString();
         }
 
+      }else if( arguments.length === 3 ){ // for text( data, x, y)
+        if ( typeof str === 'number' && (str+"").indexOf('.') >= 0 ) {
+          // Make sure .15 rounds to .1, but .151 rounds to .2.
+          if ( ( str * 1000 ) - Math.floor( str * 1000 ) === 0.5 ) {
+            str = str - 0.0001;
+          }
+          str = str.toFixed(3);
+        } else if ( str === 0 ) {
+          str = str.toString();
+        }
+
         var width = 0;
         // If the font is a standard Canvas font...
         if (!curTextFont.glyph) {
@@ -5480,6 +5492,7 @@
               }
               p.LastText[0] = x;
               p.LastText[1] = p.LastText[1] + curTextSize;
+
               for(; start < spaceMark + 1 ; start++ ){
                 text( str[start] )
               }
