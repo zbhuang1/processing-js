@@ -4270,9 +4270,11 @@
               }
               p.LastText[0] = x;
               p.LastText[1] = p.LastText[1] + curTextSize;
-              for(; start < spaceMark + 1 ; start++ ){
+              /*for(; start < spaceMark + 1 ; start++ ){
                 text( str[start] )
-              }
+              }*/
+              text(str.substring(start,spaceMark+1));
+              start=spaceMark+1;
               lineWidth = 0;
               if( p.LastText[1] + 2*curTextSize > arguments[2] + height + 0.6*curTextSize ){ // stop if no enough space for one more line draw
                 return;
