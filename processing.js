@@ -382,7 +382,7 @@
       });
     }
 		aCode = aCode.replace(/catch\s\((\w+)\1\s(\w+)\2\)\s\{.\($2\)/g, "catch ($2$1)\n{$2$1");
-		
+
     // float foo = 5;
     aCode = aCode.replace(/(?:static\s+)?(?:final\s+)?(\w+)((?:\[\s*\])+|\s)\s*(\w+)\[?\]?(\s*[=,;])/g, function (all, type, arr, name, sep) {
       if (type === "return") {
@@ -981,8 +981,8 @@
             dest[j] = src[i];
           }
         }
-      }      
-    };
+      }
+    }
 
     p.ArrayList = function ArrayList(size, size2, size3) {
 
@@ -2071,15 +2071,15 @@
     p.loadStrings = function loadStrings(url) {
       return ajax(url).split("\n");
     };
-    
+
     p.loadBytes = function loadBytes(url) {
       var string = ajax(url);
       var ret = new Array( string.length );
-      
+
       for ( var i = 0; i < string.length; i++) {
         ret[i] = string.charCodeAt(i);
       }
-      
+
       return ret;
     };
 
