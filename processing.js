@@ -236,7 +236,7 @@
       });
     }
 		aCode = aCode.replace(/catch\s\((\w+)\1\s(\w+)\2\)\s\{.\($2\)/g, "catch ($2$1)\n{$2$1");
-		
+
     // float foo = 5;
     aCode = aCode.replace(/(?:static\s+)?(?:final\s+)?(\w+)((?:\[\])+| ) *(\w+)\[?\]?(\s*[=,;])/g, function (all, type, arr, name, sep) {
       if (type === "return") {
@@ -812,7 +812,7 @@
             dest[j] = src[i];
           }
         }
-      }      
+      }
     }
 
     p.ArrayList = function ArrayList(size, size2, size3) {
@@ -1894,17 +1894,17 @@
     p.loadStrings = function loadStrings(url) {
       return ajax(url).split("\n");
     };
-    
+
     p.loadBytes = function loadBytes(url) {
-      
+
       var string = ajax(url);
       var ret = new Array( string.length );
-      
+
       for ( var i = 0; i < string.length; i++) {
-        
+
         ret[i] = string.charCodeAt(i);
       }
-      
+
       return ret;
     };
 
@@ -2063,14 +2063,15 @@
           width: "100%",
           height: "15%",
           fontFamily: "sans-serif",
-          color: "black",
-          backgroundColor: "white"
+          color: "#ccc",
+          backgroundColor: "black"
         },
         outputStyles = {
           position: "relative",
           fontFamily: "monospace",
           overflow: "auto",
-          height: "100%"
+          height: "100%",
+          paddingTop: "5px"
         },
         resizerStyles = {
           height: "5px",
@@ -2080,23 +2081,26 @@
         },
         closeButtonStyles = {
           position: "absolute",
-          top: "0px",
-          right: "15px",
-          border: "1px solid black",
-          borderTop: "none",
+          top: "5px",
+          right: "20px",
+          color: "#111",
+          MozBorderRadius: "4px",
+          webkitBorderRadius: "4px",
+          borderRadius: "4px",
           cursor: "pointer",
-          fontWeight: "bold",
+          fontWeight: "normal",
           textAlign: "center",
-          padding: "1px 5px",
-          backgroundColor: "#eb0000"
+          padding: "3px 5px",
+          backgroundColor: "#333",
+          fontSize: "12px"
         },
         entryStyles = {
-          borderBottom: "1px solid #d3d3d3",
+          //borderBottom: "1px solid #d3d3d3",
           minHeight: "16px"
         },
         entryTextStyles = {
           fontSize: "12px",
-          margin: "0 5px 0 5px",
+          margin: "0 8px 0 8px",
           maxWidth: "100%",
           whiteSpace: "pre-wrap",
           overflow: "auto"
