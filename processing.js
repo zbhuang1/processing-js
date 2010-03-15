@@ -723,7 +723,6 @@
       start = new Date().getTime(),
       timeSinceLastFPS = start,
       framesSinceLastFPS = 0;
-      lastTextPos = [ 0, 0 ,0 ];
       
     // User can only have MAX_LIGHTS lights
     var lightCount = 0;
