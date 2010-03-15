@@ -103,6 +103,7 @@
       throw curContext.getShaderInfoLog( fragmentShaderObject );
     }
 
+<<<<<<< HEAD
     var programObject = curContext.createProgram();
     curContext.attachShader( programObject, vertexShaderObject );
     curContext.attachShader( programObject, fragmentShaderObject );
@@ -114,6 +115,36 @@
     return programObject;
   };
 
+=======
+  /*
+  */
+  var createProgramObject = function( curContext, vetexShaderSource, fragmentShaderSource ) {
+    var vertexShaderObject = curContext.createShader(curContext.VERTEX_SHADER );
+    curContext.shaderSource( vertexShaderObject, vetexShaderSource );
+    curContext.compileShader( vertexShaderObject );
+    if(!curContext.getShaderParameter( vertexShaderObject, curContext.COMPILE_STATUS )){
+      throw curContext.getShaderInfoLog( vertexShaderObject );
+    }
+
+    var fragmentShaderObject = curContext.createShader(curContext.FRAGMENT_SHADER );
+    curContext.shaderSource( fragmentShaderObject, fragmentShaderSource );
+    curContext.compileShader( fragmentShaderObject );
+    if(!curContext.getShaderParameter( fragmentShaderObject, curContext.COMPILE_STATUS )){
+      throw curContext.getShaderInfoLog( fragmentShaderObject );
+    }
+
+    var programObject = curContext.createProgram();
+    curContext.attachShader( programObject, vertexShaderObject );
+    curContext.attachShader( programObject, fragmentShaderObject );
+    curContext.linkProgram( programObject );
+    if(!curContext.getProgramParameter( programObject, curContext.LINK_STATUS )){
+      throw "Error linking shaders.";
+    }
+
+    return programObject;
+  };
+
+>>>>>>> added demos, tests and light implementations.
   var programObject3D;
   var programObject2D;
 
@@ -128,7 +159,11 @@
                  -0.5,-0.5,-0.5,-0.5,-0.5,0.5,-0.5,0.5,0.5,-0.5,0.5,0.5,
                  -0.5,0.5,-0.5,-0.5,-0.5,-0.5,0.5,0.5,0.5,0.5,0.5,-0.5,
                  -0.5,0.5,-0.5,-0.5,0.5,-0.5,-0.5,0.5,0.5,0.5,0.5,0.5];
+<<<<<<< HEAD
    
+=======
+
+>>>>>>> added demos, tests and light implementations.
   var boxNorms = [0,0,-1,0,0,-1,0,0,-1,0,0,-1,0,0,-1,0,0,-1,
                   0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,
                   1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,
@@ -142,20 +177,32 @@
                         -0.5,0.5,-0.5,-0.5,0.5,0.5,-0.5,0.5,0.5,0.5,0.5,0.5,
                          0.5,-0.5,0.5,0.5,-0.5,-0.5,0.5,-0.5,-0.5,-0.5,-0.5,-0.5,
                         -0.5,-0.5,-0.5,-0.5,-0.5,0.5,-0.5,-0.5,0.5,0.5,-0.5,0.5];
+<<<<<<< HEAD
   
+=======
+>>>>>>> added demos, tests and light implementations.
 
   var boxBuffer;
   var boxNormBuffer;
   var boxOutlineBuffer;
+<<<<<<< HEAD
 	
+=======
+
+>>>>>>> added demos, tests and light implementations.
   var sphereBuffer;
 
   var lineBuffer;
 
   var pointBuffer;
+<<<<<<< HEAD
   
   // Vertex shader for points and lines
   var vertexShaderSource2D = 
+=======
+  // Vertex shader for points and lines
+  var vertexShaderSource2D =
+>>>>>>> added demos, tests and light implementations.
   "attribute vec3 Vertex;" +
   "uniform vec4 color;" +
 
@@ -172,9 +219,15 @@
   "void main(void){" +
   "  gl_FragColor = gl_Color;" +
   "}";
+<<<<<<< HEAD
   
   // Vertex shader for boxes and spheres
   var vertexShaderSource3D = 
+=======
+
+  // Vertex shader for boxes and spheres
+  var vertexShaderSource3D =
+>>>>>>> added demos, tests and light implementations.
   "attribute vec3 Vertex;" +
   "attribute vec3 Normal;" +
 
@@ -184,7 +237,11 @@
   "uniform mat4 view;" +
   "uniform mat4 projection;" +
   "uniform mat4 normalTransform;" +
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> added demos, tests and light implementations.
   "uniform int lightCount;" +
 
   "struct Light {" +
@@ -208,6 +265,7 @@
   "	 vec3 VP = vec3(light.position) - ecPos;" +
 
   	 // Get the distance from the current vector to the light position
+<<<<<<< HEAD
   "  float d = length(VP); " + 
 
      // Normalize the light so it can be used in the dot product operation.
@@ -231,12 +289,41 @@
   "    for( int i = 0; i < lightCount; i++ ) {" +
   "      if( lights[i].type == 0 ) {"+
   "        AmbientLight( finalColor, vec3( color[0], color[1], color[2] ), lights[i] );"+   
+=======
+  "  float d = length(VP); " +
+
+     // Normalize the light so it can be used in the dot product operation.
+  "  VP = normalize(VP);" +
+  "	 float nDotVP = max(0.0, dot(vertNormal, VP));"+
+  "  col += vertColor * light.color * nDotVP;" +
+  "}" +
+
+  "void main(void) {" +
+
+  "  vec3 finalColor = vec3( 0.0, 0.0, 0.0 );" +
+  "  vec3 norm = vec3( normalTransform * vec4( Normal, 0.0 ) );" +
+
+     // If there were no lights this frame, just use the
+     // assigned color of the shape.
+  "  if( lightCount == 0 ) {" +
+  "    gl_FrontColor = color;" +
+  "  }" +
+
+  "  else {" +
+  "    for( int i = 0; i < lightCount; i++ ) {" +
+  "      if( lights[i].type == 0 ) {"+
+  "        AmbientLight( finalColor, vec3( color[0], color[1], color[2] ), lights[i] );"+
+>>>>>>> added demos, tests and light implementations.
   "      }" +
   "      else if( lights[i].type == 1 ) {" +
   "        DirectionalLight( finalColor, vec3( color[0], color[1], color[2] ), norm, lights[i] );" +
   "      }" +
   "      else if( lights[i].type == 2 ) {" +
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> added demos, tests and light implementations.
           // Place the current vertex into view space
           // ecPos = eye coordinate position.
   "       vec4 ecPos4 = view * model * vec4(Vertex,1.0);" +
@@ -253,7 +340,11 @@
   "  gl_Position = projection * view * model * vec4( Vertex, 1.0 );" +
   "}";
 
+<<<<<<< HEAD
   var fragmentShaderSource3D = 
+=======
+  var fragmentShaderSource3D =
+>>>>>>> added demos, tests and light implementations.
   "void main(void){" +
   "  gl_FragColor = gl_Color;" +
   "}";
@@ -725,10 +816,17 @@
       start = new Date().getTime(),
       timeSinceLastFPS = start,
       framesSinceLastFPS = 0;
+<<<<<<< HEAD
       
     // User can only have MAX_LIGHTS lights
     var lightCount = 0;
 		
+=======
+
+    // User can only have MAX_LIGHTS lights
+    var lightCount = 0;
+
+>>>>>>> added demos, tests and light implementations.
 		//sphere stuff
 		var sphereDetailV = 0,
         sphereDetailU = 0,
@@ -2959,9 +3057,15 @@
           curContext.enable(curContext.DEPTH_TEST);
           curContext.enable(curContext.BLEND);
           curContext.blendFunc(curContext.SRC_ALPHA, curContext.ONE_MINUS_SRC_ALPHA);
+<<<<<<< HEAD
           
           // Create the program objects to render 2D (points, lines) and 
           // 3D (spheres, boxes) shapes. Because 2D shapes are not lit, 
+=======
+
+          // Create the program objects to render 2D (points, lines) and
+          // 3D (spheres, boxes) shapes. Because 2D shapes are not lit,
+>>>>>>> added demos, tests and light implementations.
           // lighting calculations could be ommitted from that program object.
           programObject2D = createProgramObject( curContext, vertexShaderSource2D, fragmentShaderSource3D );
           programObject3D = createProgramObject( curContext, vertexShaderSource3D, fragmentShaderSource3D );
@@ -2977,13 +3081,23 @@
 
           boxOutlineBuffer = curContext.createBuffer();
           curContext.bindBuffer(curContext.ARRAY_BUFFER, boxOutlineBuffer);
+<<<<<<< HEAD
           curContext.bufferData(curContext.ARRAY_BUFFER, newWebGLArray(boxOutlineVerts),curContext.STATIC_DRAW);
 
+=======
+
+          curContext.bufferData(curContext.ARRAY_BUFFER, newWebGLArray(boxOutlineVerts),curContext.STATIC_DRAW);
+
+>>>>>>> added demos, tests and light implementations.
           // The sphere vertices are specified dynamically since the user
           // can change the level of detail. Everytime the user does that
           // using sphereDetail(), the new vertices are calculated.
 					sphereBuffer = curContext.createBuffer();
+<<<<<<< HEAD
           
+=======
+
+>>>>>>> added demos, tests and light implementations.
           lineBuffer = curContext.createBuffer();
           curContext.bindBuffer(curContext.ARRAY_BUFFER, lineBuffer);
 
@@ -3678,8 +3792,13 @@
  		////////////////////////////////////////////////////////////////////////////
     // Lights
     ////////////////////////////////////////////////////////////////////////////
+<<<<<<< HEAD
     
     /*      
+=======
+
+    /*
+>>>>>>> added demos, tests and light implementations.
     */
     p.ambientLight = function( r, g, b ) {
       if( p.use3DContext && lightCount < p.MAX_LIGHTS ) {
@@ -3701,7 +3820,11 @@
         uniformi( programObject3D, "lightCount", ++lightCount );
       }
     }
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> added demos, tests and light implementations.
     /*
     */
     p.pointLight = function( r, g, b, x, y, z ) {
@@ -3893,12 +4016,18 @@
 
           v.mult(m);
 
+<<<<<<< HEAD
         // fix stitching problems. (lines get occluded by triangles
         // since they share the same depth values). This is not entirely
         // working, but it's a start for drawing the outline. So
         // developers can start playing around with styles.
         curContext.enable( curContext.POLYGON_OFFSET_FILL );
         curContext.polygonOffset( 1, 1 );
+=======
+          var normalMatrix = new PMatrix3D();
+          normalMatrix.set(v);
+          normalMatrix.invert();
+>>>>>>> added demos, tests and light implementations.
 
           uniformMatrix( programObject3D , "normalTransform", false, normalMatrix.array() );
 
@@ -3991,10 +4120,19 @@
 			sphereVerts.push(0);
 			sphereVerts.push(1);
 			sphereVerts.push(0);
+<<<<<<< HEAD
       
       //set the buffer data
       curContext.bindBuffer(curContext.ARRAY_BUFFER, sphereBuffer);
       curContext.bufferData(curContext.ARRAY_BUFFER, newWebGLArray(sphereVerts),curContext.STATIC_DRAW);
+=======
+
+
+      //set the buffer data
+      curContext.bindBuffer(curContext.ARRAY_BUFFER, sphereBuffer);
+      curContext.bufferData(curContext.ARRAY_BUFFER, newWebGLArray(sphereVerts),curContext.STATIC_DRAW);
+
+>>>>>>> added demos, tests and light implementations.
 		};
 
 		// sphere and sphereDetail
@@ -4074,6 +4212,7 @@
         view.apply( modelView.array() );
 
         curContext.useProgram( programObject3D );
+<<<<<<< HEAD
         
         uniformMatrix( programObject3D, "model", true,  model.array() );
         uniformMatrix( programObject3D, "view", true, view.array() );
@@ -4087,6 +4226,21 @@
 
         v.mult(m);
 
+=======
+
+        uniformMatrix( programObject3D, "model", true,  model.array() );
+        uniformMatrix( programObject3D, "view", true, view.array() );
+        uniformMatrix( programObject3D, "projection", true, projection.array() );
+
+        var v = new PMatrix3D();
+        v.set(view);
+
+        var m = new PMatrix3D();
+        m.set(model);
+
+        v.mult(m);
+
+>>>>>>> added demos, tests and light implementations.
         var normalMatrix = new PMatrix3D();
         normalMatrix.set(v);
         normalMatrix.invert();
