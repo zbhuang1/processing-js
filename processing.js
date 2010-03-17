@@ -1673,13 +1673,13 @@
     };
 
     p.link = function (href, target) {
-      if (target)
-      {
-	window.open(href,target);
+      if (typeof target !== 'undefined') {
+        window.open(href, target);
+      } else {
+        window.location = href;
       }
-      else
-	window.location = href;
     };
+
     p.beginDraw = function beginDraw() {};
     p.endDraw = function endDraw() {};
 
