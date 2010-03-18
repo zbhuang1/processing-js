@@ -797,7 +797,7 @@
 
     ////////////////////////////////////////////////////////////////////////////
     // Char handling
-    ////////////////////////////////////////////////////////////////////////////    
+    ////////////////////////////////////////////////////////////////////////////
     var charMap = {};
 
     function Char(chr) {
@@ -807,7 +807,7 @@
         this.code = NaN;
       }
 
-      return ( typeof charMap[this.code] === 'undefined' ) ? charMap[this.code] = this : charMap[this.code];   
+      return ( typeof charMap[this.code] === 'undefined' ) ? charMap[this.code] = this : charMap[this.code];
     };
 
     Char.prototype.toString = function() {
