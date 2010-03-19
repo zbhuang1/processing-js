@@ -723,6 +723,7 @@
       start = new Date().getTime(),
       timeSinceLastFPS = start,
       framesSinceLastFPS = 0;
+      lastTextPos = [ 0, 0 ,0 ];
 
     // User can only have MAX_LIGHTS lights
     var lightCount = 0;
@@ -5384,12 +5385,20 @@
     };
 
     // Print some text to the Canvas
-    p.text = function text( str, x, y, width, height){
-      if( arguments.length === 1 ){ // for text( data )
+    p.text = function text(){
 
-        p.text( str, p.LastText[0], p.LastText[1] );
+      if( arguments.length == 1 ){ // for text( str )
 
-      }else if( arguments.length === 3 ){ // for text( data, x, y)
+        p.text( arguments[0], lastTextPos[0], lastTextPos[1] );
+
+      }else if( arguments.length == 3 ){ // for text( str, x, y)
+
+        text( arguments[0], arguments[1], arguments[2], 0 );
+
+      }else if( arguments.length == 4 ){ // for text( str, x, y, z)
+
+        var str=arguments[0], x=arguments[1], y=arguments[2], z=arguments[3];
+
         if ( typeof str === 'number' && (str+"").indexOf('.') >= 0 ) {
           // Make sure .15 rounds to .1, but .151 rounds to .2.
           if ( ( str * 1000 ) - Math.floor( str * 1000 ) === 0.5 ) {
@@ -5398,6 +5407,22 @@
           str = str.toFixed(3);
         } else if ( str === 0 ) {
           str = str.toString();
+        }
+
+        var pos;
+        do{
+          pos = str.indexOf("\n");
+          if(pos != -1){
+            if(pos != 0){
+              text(str.substring(0, pos));
+            }
+            y += curTextSize;
+            str = str.substring(pos+1, str.length);
+          }
+        }while(pos != -1);
+
+        if(p.use3DContext){
+          //...
         }
 
         var width = 0;
@@ -5441,9 +5466,22 @@
           }
           curContext.restore();
         }
-        p.LastText[0] = x + width;
-        p.LastText[1] = y;
-      }else if( arguments.length === 5 ){ // for text( stringdata, x, y , width, height)
+
+        if(p.use3DContext){
+          // ...
+        }
+
+        lastTextPos[0] = x + width;
+        lastTextPos[1] = y;
+        lastTextPos[2] = z;
+
+      }else if( arguments.length == 5 ){ // for text( str, x, y , width, height)
+
+        text( arguments[0], arguments[1], arguments[2], arguments[3], arguments[4], 0 );
+
+      }else if( arguments.length == 6 ){ // for text( stringdata, x, y , width, height, z)
+
+        var str=arguments[0], x=arguments[1], y=arguments[2], width=arguments[3], height=arguments[4], z=arguments[5];
 
         if( str != "" ){
 
@@ -5456,8 +5494,8 @@
           var letterWidth = 0;
           var textboxWidth = width ;
 
-          p.LastText[0] = x;
-          p.LastText[1] = y - 0.4*curTextSize;
+          lastTextPos[0] = x;
+          lastTextPos[1] = y - 0.4*curTextSize;
 
           curContext.font = curTextSize + "px " + curTextFont.name;
 
@@ -5468,7 +5506,7 @@
             } else if (curContext.mozDrawText) {
               letterWidth = curContext.mozMeasureText( str[i] );
             }
-            if( str[i] != "\n" && ( str[i] == " " || (str[i-1]!=" " && str[i+1] == " ") || lineWidth + 2*letterWidth < textboxWidth ) ){ // check a line of text
+            if( str[i]!="\n" && ( str[i]==" " || (str[i-1]!=" " && str[i+1]==" ") || lineWidth + 2*letterWidth < textboxWidth ) ){ // check a line of text
               if( str[i] == " " ){
                 spaceMark = i;
               }
@@ -5477,14 +5515,19 @@
               if( start == spaceMark + 1 ){ // in case a whole line without a space
                 spaceMark = i;
               }
-              p.LastText[0] = x;
-              p.LastText[1] = p.LastText[1] + curTextSize;
 
-              for(; start < spaceMark + 1 ; start++ ){
-                text( str[start] )
+              lastTextPos[0] = x;
+              lastTextPos[1] = lastTextPos[1] + curTextSize;
+              if(str[i]=="\n"){
+                text(str.substring(start,i));
+                start=i+1;
+              }else{
+                text(str.substring(start,spaceMark+1));
+                start=spaceMark+1;
               }
+
               lineWidth = 0;
-              if( p.LastText[1] + 2*curTextSize > arguments[2] + height + 0.6*curTextSize ){ // stop if no enough space for one more line draw
+              if( lastTextPos[1] + 2*curTextSize > y + height + 0.6*curTextSize ){ // stop if no enough space for one more line draw
                 return;
               }
               i = start - 1;
@@ -5492,15 +5535,16 @@
           }
 
           if( start != str.length ){ // draw the last line
-            p.LastText[0] = x;
-            p.LastText[1] = p.LastText[1] + curTextSize;
+            lastTextPos[0] = x;
+            lastTextPos[1] = lastTextPos[1] + curTextSize;
             for(; start < str.length; start ++){
               text( str[start] );
             }
           }
 
-        }
-      }
+        } // end str != ""
+
+      } // end arguments.length == 6
     };
 
     // Load Batik SVG Fonts and parse to pre-def objects for quick rendering
