@@ -143,7 +143,6 @@
                          0.5,-0.5,0.5,0.5,-0.5,-0.5,0.5,-0.5,-0.5,-0.5,-0.5,-0.5,
                         -0.5,-0.5,-0.5,-0.5,-0.5,0.5,-0.5,-0.5,0.5,0.5,-0.5,0.5];
   
-
   var boxBuffer;
   var boxNormBuffer;
   var boxOutlineBuffer;
@@ -385,7 +384,6 @@
 		
     // float foo = 5;
     aCode = aCode.replace(/(?:static\s+)?(?:final\s+)?(\w+)((?:\[\s*\])+|\s)\s*(\w+)\[?\]?(\s*[=,;])/g, function (all, type, arr, name, sep) {
-
       if (type === "return") {
         return all;
       } else {
@@ -3894,12 +3892,9 @@
 
           v.mult(m);
 
-        // fix stitching problems. (lines get occluded by triangles
-        // since they share the same depth values). This is not entirely
-        // working, but it's a start for drawing the outline. So
-        // developers can start playing around with styles.
-        curContext.enable( curContext.POLYGON_OFFSET_FILL );
-        curContext.polygonOffset( 1, 1 );
+          var normalMatrix = new PMatrix3D();
+          normalMatrix.set(v);
+          normalMatrix.invert();
 
           uniformMatrix( programObject3D , "normalTransform", false, normalMatrix.array() );
 
@@ -5389,6 +5384,7 @@
     p.text = function text(){
 
       var str=arguments[0];
+
 
       if ( typeof str === 'number' && (str+"").indexOf('.') >= 0 ) {
           // Make sure .15 rounds to .1, but .151 rounds to .2.
